@@ -1,0 +1,16 @@
+node_modules/
+/dist/
+.DS_Store
+./mysql/
+package-lock.json
+yarn-error.log
+/logs
+debug.log
+.config
+.env
+*.log
+coverage/
+/coverage
+/dist/*
+.env.e2e
+/.idea/

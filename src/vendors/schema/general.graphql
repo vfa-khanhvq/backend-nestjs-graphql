@@ -1,0 +1,74 @@
+scalar JSON
+scalar Date
+
+type Error {
+  errorCode: String!
+  message: String
+  details: [ErrorDetail]!
+}
+
+type ErrorDetail {
+  message: String
+  type: String
+  key: String
+  value: String
+}
+
+type PagerInformation {
+  pageTotal: Int
+  totalCount: Int
+  currentPage: Int
+  pageSize: Int
+}
+
+type MutationResponse {
+  statusCode: Int!
+  data: String
+  error: Error
+}
+
+type CreditReserveOrder {
+  id: Int
+  creditReservesId: Int
+  branchCode: String
+  accountCode: String
+  brandCode: String
+  orderAmount: Int
+  accountType: Int
+  orderDate: Date
+  invalidCardCheckResult: String
+  ycustomerResult: String
+  branchlockResult: String
+  moneyShortageResult: String
+  nisaResult: String
+  nameMatchingResult: String
+  authSalesResult: String
+  snrfileFundsId: Int
+  snrfileDepositsId: Int
+  notTarget: String
+}
+
+type StepResponse {
+  id: Int
+  currentStep: Int
+  status: String
+  orderDate: Date
+}
+
+type GetCreditReserveOrderResponse {
+  statusCode: Int
+  message: String
+  # data: [CreditReserveOrder] //TODO: checking
+  error: Error
+}
+
+type UpdateStepResponse {
+  statusCode: Int
+  message: String
+  data: String
+  error: Error
+}
+
+input InputCreditOrder {
+  orderDate: Date!
+}

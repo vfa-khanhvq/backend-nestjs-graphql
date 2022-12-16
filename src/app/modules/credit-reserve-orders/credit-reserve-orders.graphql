@@ -1,0 +1,152 @@
+type OrderDetail {
+  day: Int
+  isActive: Boolean
+  month: Int
+}
+type Orders {
+  orderDetail: [OrderDetail]
+  no: Int
+  month: Int
+  year: Int
+}
+type OrdersRespone {
+  items: [Orders]
+  pagination: PagerInformation
+}
+
+type GetOrderListRespone {
+  statusCode: Int
+  message: String
+  data: OrdersRespone
+  error: Error
+}
+
+enum SelectOptionResult {
+  invalidCardCheckResult
+  ycustomerResult
+  branchlockResult
+  moneyShortageResult
+  nisaResult
+  nameMatchingResult
+  authSalesResult
+  snrfileFundsId
+  snrfileDepositsId
+}
+
+enum SortOption {
+  id
+  creditReservesId
+  branchCode
+  accountCode
+  brandCode
+  orderDate
+  orderAmount
+  accountType
+  invalidCardCheckResult
+  ycustomerResult
+  branchlockResult
+  moneyShortageResult
+  nisaResult
+  nameMatchingResult
+  authSalesResult
+  snrfileFundsId
+  snrfileDepositsId
+  notTarget
+}
+
+enum SortType {
+  ASC
+  DESC
+}
+
+input IntputGetOrderByDate {
+  orderDate: Date!
+  getAll: Boolean
+  sortOption: SortOption = creditReservesId
+  sortType: SortType = ASC
+  page: Int
+  pageSize: Int
+}
+
+enum ProcessStatus {
+  HEALTHY,
+  IN_PROCESS
+}
+
+type CreditReserveOrderByStep {
+  status: String
+  items: [CreditReserveOrder]
+  allNull: Boolean
+  step: Int
+  statusStep: String
+  pagination: PagerInformation
+}
+
+type GetCreditReserveOrderByStepResponse {
+  statusCode: Int
+  message: String
+  data: CreditReserveOrderByStep
+  error: Error
+}
+
+input InputResetOrder {
+  orderDate: Date!
+}
+
+input InputUpateStep {
+  orderDate: Date!
+  step: Int!
+}
+
+input InputCheckResult {
+  orderDate: Date!
+}
+
+input InputChangeOrderDate {
+  orderDate: Date!
+  newOrderDate: Date!
+}
+
+input InputCheckResults {
+  orderDate: Date
+  rejects: [Int]
+}
+
+type ResetDataResponse {
+  statusCode: Int
+  message: String
+  error: Error
+}
+
+input InputInsertData {
+  orderDate: Date!
+  amount: Int
+  setupData: Boolean
+}
+
+input InputInsertDataReserver {
+  amount: Int
+}
+
+type Query {
+  getOrderList(page: Int, pageSize: Int): GetOrderListRespone
+  getOrdersByDate(
+    input: IntputGetOrderByDate!
+  ): GetCreditReserveOrderByStepResponse
+}
+
+type Mutation {
+  createOrderListToSNR(input: InputCreditOrder!): GetCreditReserveOrderResponse
+  resetOrder(input: InputResetOrder!): GetCreditReserveOrderResponse
+  resetOrderAll(input: InputResetOrder!): GetCreditReserveOrderResponse
+  removeSnrRecord(input: InputResetOrder!): GetCreditReserveOrderResponse
+  insertData(input: InputInsertData!): GetCreditReserveOrderResponse
+  insertReserver(input: InputInsertDataReserver!): GetCreditReserveOrderResponse
+  handleCheckResults(
+    input: InputCheckResults
+  ): GetCreditReserveOrderResponse
+  createPaymentsToSnr(orderDate: Date): GetCreditReserveOrderResponse
+  changeOrderDate(input: InputChangeOrderDate!): GetCreditReserveOrderResponse
+  updateStep(input: InputUpateStep!): UpdateStepResponse
+  updateResultStep(input: InputCheckResult!): UpdateStepResponse
+}

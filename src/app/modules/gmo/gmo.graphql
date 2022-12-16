@@ -1,0 +1,57 @@
+scalar Int64
+scalar FileUpload
+
+type Query {
+  getGmoData(input: InputCreditOrder!): GmoDataResponse
+}
+
+type Mutation {
+  updateGmoData(gmoData: GmoData!): GetCreditReserveOrderResponse
+}
+
+input GmoData {
+  orderDate: Date!
+  file: FileUpload!
+}
+
+input GmoItemInput {
+  orderId: String!
+  memberId: String!
+  errorCode: String
+  errorCodeDetail: String
+  statusCode: String!
+}
+
+type GmoDataResponse {
+  statusCode: Int
+  message: String
+  data: [GmoItem]
+  error: Error
+}
+
+type GmoItem {
+  """
+  1 ショップID
+  """
+  shopId: String,
+  """
+  2 オーダーID
+  """
+  orderId: String,
+  """
+  3 処理区分
+  """
+  processingDivision: String,
+  """
+  5 利用金額 
+  """
+  amount: Int,
+  """
+  7 支払方法 1 【半角文字】数 決済を行う際の支払方法で、以下のいずれか
+  """
+  paymentMethod: Int,
+  """
+  10 会員ID 60 【半角文字】英数
+  """
+  memberId: String
+}
